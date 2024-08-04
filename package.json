@@ -1,25 +1,15 @@
 {
-    "name": "telegram_ecom_bot",
-    "version": "1.0.0",
-    "description": "Telegram E-commerce Bot",
-    "main": "server.js",
-    "scripts": {
-      "start": "node server.js",
-      "build": "webpack",
-      "deploy": "echo 'Deploying...' && npm run build && npm start"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "axios": "^0.21.1",
-      "body-parser": "^1.19.0",
-      "dotenv": "^8.2.0",
-      "express": "^4.17.1"
-    },
-    "devDependencies": {
-      "dotenv-webpack": "^7.0.2",
-      "webpack": "^5.24.3",
-      "webpack-cli": "^4.5.0"
-    }
+  "name": "telegram_ecom_bot",
+  "version": "1.0.0",
+  "description": "E-commerce bot for Telegram with Toncoin payments",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
   }
-  
+}
