@@ -1,12 +1,12 @@
-name: Deploy
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - main  # ou a branch que você utiliza para deploy
+      - main
 
 jobs:
-  deploy:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # ou a versão do Node.js que você está usando
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install
@@ -24,9 +24,16 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      - name: Deploy
-        run: npm run deploy
+      - name: Deploy to GitHub Pages
+        run: |
+          npm install gh-pages
+          npm run deploy
+
+      - name: Deploy to server
         env:
-          TONCOIN_WALLET_ADDRESS: ${{ secrets.TONCOIN_WALLET_ADDRESS }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          TONCOIN_WALLET_ADDRESS: ${{ secrets.TONCOIN_WALLET_ADDRESS }}
           TON_WEBHOOK_SECRET: ${{ secrets.TON_WEBHOOK_SECRET }}
+        run: |
+          echo "Deploying to server..."
+          npm start
