@@ -10,12 +10,48 @@ body {
     text-align: center;
 }
 
-button {
-    padding: 10px 20px;
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.menu-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 15px;
+    text-align: center;
+    width: 150px;
+}
+
+.menu-item img {
+    width: 100px;
+    height: 100px;
+}
+
+.menu-item h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.menu-item p {
     font-size: 16px;
-    color: var(--tg-theme-button-text-color, #fff);
-    background-color: var(--tg-theme-button-color, #007bff);
+    margin: 10px 0;
+}
+
+.menu-item button {
+    padding: 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.menu-item button:hover {
+    background-color: #0056b3;
 }
