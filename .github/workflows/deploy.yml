@@ -1,0 +1,32 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que você utiliza para deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # ou a versão do Node.js que você está usando
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build
+
+      - name: Deploy
+        run: npm run deploy
+        env:
+          TONCOIN_WALLET_ADDRESS: ${{ secrets.TONCOIN_WALLET_ADDRESS }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          TON_WEBHOOK_SECRET: ${{ secrets.TON_WEBHOOK_SECRET }}
