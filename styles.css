@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--tg-theme-bg-color, #fff);
+    color: var(--tg-theme-text-color, #000);
+    margin: 0;
+    padding: 20px;
+}
+
+#app {
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: var(--tg-theme-button-text-color, #fff);
+    background-color: var(--tg-theme-button-color, #007bff);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
