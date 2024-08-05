@@ -21,19 +21,15 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install webpack and dotenv-webpack
+        run: npm install --save-dev webpack webpack-cli dotenv-webpack
+
       - name: Build the project
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        run: |
-          npm install gh-pages
-          npm run deploy
-
-      - name: Deploy to server
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          TONCOIN_WALLET_ADDRESS: ${{ secrets.TONCOIN_WALLET_ADDRESS }}
-          TON_WEBHOOK_SECRET: ${{ secrets.TON_WEBHOOK_SECRET }}
-        run: |
-          echo "Deploying to server..."
-          npm start
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          commit_message: "Deploy to GitHub Pages"  # Adicione uma mensagem de commit
