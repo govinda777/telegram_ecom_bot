@@ -6,3 +6,4 @@ telegram_ecommerce_bot
 
 brew install act
 
+act --container-architecture linux/amd64
