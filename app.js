@@ -1,35 +1,36 @@
-const products = [
-    { name: 'Burger', price: 4.99, image: 'burger.png' },
-    { name: 'Fries', price: 1.99, image: 'fries.png' },
-  ];
-  
-  const productContainer = document.getElementById('product-container');
-  
-  products.forEach(product => {
-    const productDiv = document.createElement('div');
-    productDiv.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h2>${product.name} - $${product.price}</h2>
-      <button onclick="initiateTransaction('${product.name}', ${product.price})">ADD</button>
-    `;
-    productContainer.appendChild(productDiv);
-  });
-  
-  function initiateTransaction(productName, price) {
-    fetch('/toncoin-webhook', {
-      method: 'POST',
-      headers: {
+require('dotenv').config();
+const TelegramBot = require('node-telegram-bot-api');
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const crypto = require('crypto');
+
+// Configurações do bot
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
+
+// Função para criar um pagamento na CoinPayments
+const createPayment = async (amount, description) => {
+    const payload = {
+        cmd: 'create_transaction',
+        key: process.env.COINPAYMENTS_API_KEY,
+        amount: amount,
+        currency1: 'USD',
+        currency2: 'BTC',  // Pode ser outra criptomoeda suportada pela CoinPayments
+        buyer_email: 'buyer@example.com',
+        item_name: description,
+        format: 'json'
+    };
+
+    const headers = {
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ productName, price }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('Transaction successful!');
-      } else {
-        alert('Transaction failed.');
-      }
-    });
-  }
-  
+        'HMAC': createHMAC(payload),
+    };
+
+    const response = await axios.post('https://www.coinpayments.net/api.php', payload, { headers });
+    return response.data.result.checkout_url;
+};
+
+const createHMAC = (payload) => {
+    const hmac = crypto.createHmac('sha512', process.env.COINPAYMENTS_API_SECRET);
+    hmac.update(Buffer.from(new URLSearchParams(payload).toString()));
+    return hmac.digest('hex');
